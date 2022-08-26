@@ -1,5 +1,11 @@
+<%@ page import="java.util.Date" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet"
@@ -17,61 +23,56 @@
     <title>Insert title here</title>
 </head>
 <body>
-<!--<my:navBar current="list" />-->
+<my:navBar current="list" />
 
 
 <div class="container">
     <div class="row">
-        <div class="col" style="margin-top: 30px;">
-            <h1>글 목록</h1>
-           <!-- <c:if test="${not empty message }">
-                <div class="alert alert-primary">
-                    ${message }
-                </div>
-            </c:if>-->
+        <div class="col">
 
-            <table class="table table-striped">
+            <c:if test="${not empty message }">
+                <div class="alert alert-primary">
+                        ${message }
+                </div>
+            </c:if>
+
+            <table style="margin-top: 30px;" class="table table-striped">
                 <thead>
                 <tr>
                     <th>
                         <i class="fa-solid fa-hashtag"></i>
                     </th>
-                    <th>제목</th>
-                    <th>작성일</th>
+                    <th>title</th>
+                    <th>
+                        <i class="fa-solid fa-calendar"></i>
+                    </th>
                 </tr>
                 </thead>
 
                 <tbody>
-                    <tr th:each="board : ${boardList}">
+                <c:forEach items="${boardList }" var="board">
+                    <tr>
+                        <td>${board.id }</td>
+                        <td>
 
-                        <td th:text="${board.id}">
-                           <!-- <c:url value="/board/get" var="getUrl">
+                            <c:url value="/board/get" var="getUrl">
                                 <c:param name="id" value="${board.id }"></c:param>
                             </c:url>
 
                             <a href="${getUrl }">
                                 <c:out value="${board.title }" />
-                            </a>-->
-
-                            <!-- 댓글 갯수 보여주기 -->
-                            <!--<c:if test="${board.numOfReply > 0}">
-										<span>
-											<i class="fa-solid fa-comment-dots"></i>
-											[${board.numOfReply }]
-										</span>
-                            </c:if>-->
+                            </a>
                         </td>
 
-                        <td th:text="${board.title}"></td>
-                        <td th:text="${board.inserted}"></td>
+                        <td><fmt:formatDate value="<%=new Date()%>" type="both"/></td>
                     </tr>
+                </c:forEach>
                 </tbody>
             </table>
 
+            <ul id="pagingul">
 
-    <!--        <div id="mt-3">
-            <ex:PageNation path="list" />
-            </div> -->
+            </ul>
         </div>
     </div>
 </div>

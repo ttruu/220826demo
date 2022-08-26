@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +21,13 @@
 </head>
 <body>
 
-<!--<my:navBar current="write"/>-->
+<my:navBar current="write"/>
 
 <div class="container">
     <div class="row">
         <div class="col">
             <h1 style="margin-top: 30px;">글 작성</h1>
-            <form action="/board/writePro" method="post">
+            <form action="/board/write" method="post">
                 <div>
                     <label for="input1" class="from-label">제목</label>
                     <input class="form-control" type="text" name="title" required id="input1" />
