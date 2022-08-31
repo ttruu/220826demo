@@ -9,27 +9,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Getter
 @Setter
 public class Board {
-    private long id;
+    private int id;
+    private String boardName;
+    private String password;
     private String title;
     private String content;
-    private LocalDateTime inserted;
+    private Date inserted;
 
-/*    public String getPrettyInserted() {
-        // 24시간 이내면 시간만
-        // 이전이면 년-월-일
 
-        LocalDateTime now = LocalDateTime.now();
-        if (now.minusHours(24).isBefore(inserted)) {
-            return inserted.toLocalTime().toString();
-        } else {
-            return inserted.toLocalDate().toString();
-        }
-    }*/
+    private int start;
+    private int end;
+    private String searchInput;
+    private String search;
+
 }
 
 

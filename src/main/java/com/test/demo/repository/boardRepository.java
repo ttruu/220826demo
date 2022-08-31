@@ -2,7 +2,6 @@ package com.test.demo.repository;
 
 import com.test.demo.domain.Board;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -16,11 +15,33 @@ public class boardRepository {
     public List<Board> boardList(Board board) {
         List<Board> boardList = session.selectList("boardList", board);
 
+        if(board.getSearch() != null) {
+            if(board.getSearch().equals("title")) {
+                boardList = session.selectList("boardTitleSearch", board);
+            } else {
+                boardList = session.selectList("boardContentSearch", board);
+            }
+        }
         return boardList;
     }
 
-    public Board getBoard(long id) {
+    public int total(Board board) {
+        int total;
+        total = session.selectOne("total");
+
+        if(board.getSearch() != null) {
+            if(board.getSearch().equals("title")) {
+                total = session.selectOne("boardTitleSearchTotal", board);
+            } else {
+                total = session.selectOne("boardContentSearchTotal", board);
+            }
+        }
+        return total;
+    }
+
+    public Board getBoard(int id) {
         Board getBoard = session.selectOne("getBoard", id);
+
         return getBoard;
     }
 
@@ -33,9 +54,12 @@ public class boardRepository {
     }
 
     public void insertBoard(Board boardDto) {
-        session.insert("insertBoard", boardDto);
+        if (boardDto.getPassword() == null || boardDto.getPassword() == "") {
+            session.insert("insertBoardNull", boardDto);
+        } else {
+            session.insert("insertBoard", boardDto);
+        }
     }
-
 }
 
 

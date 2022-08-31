@@ -5,17 +5,41 @@
 <mapper namespace="com.test.demo.boardMapper">
 
     <select id="boardList" resultType="Board" parameterType="Board">
-        select id, title, inserted
-        FROM Board
-        ORDER BY id DESC
+        select * from (select rownum rm, b.* from
+                (select * from board order by id desc) b)
+        where rm between #{start} and #{end}
+    </select>
+
+    <select id="boardTitleSearchTotal" resultType="int" parameterType="Board">
+        select count(*) from (select * from board where title like '%' || #{searchInput} || '%' order by id desc)
+    </select>
+
+    <select id="boardContentSearchTotal" resultType="int" parameterType="Board">
+        select count(*) from (select * from board where content like '%' || #{searchInput} || '%' order by id desc)
+    </select>
+
+    <select id="boardTitleSearch" resultType="Board" parameterType="Board">
+        select * from (select rownum rm, b.* from
+                (select * from board where title like '%' || #{searchInput} || '%' order by id desc) b)
+        where rm between #{start} and #{end}
+    </select>
+
+    <select id="boardContentSearch" resultType="Board" parameterType="Board">
+        select * from (select rownum rm, b.* from
+            (select * from board where content like '%' || #{searchInput} || '%' order by id desc) b)
+        where rm between #{start} and #{end}
     </select>
 
     <select id="getBoard" resultType="Board">
-        SELECT * FROM Board WHERE id = #{id}
+        SELECT id, boardName, password, title, content, inserted FROM Board WHERE id = #{id}
     </select>
 
+    <insert id="insertBoardNull" parameterType="Board">
+        INSERT INTO Board(id, boardName, title, content, inserted) VALUES (auto.nextval, #{boardName}, #{title}, #{content}, sysdate)
+    </insert>
+
     <insert id="insertBoard" parameterType="Board">
-        INSERT INTO Board VALUES (auto.nextval, #{title}, #{content}, sysdate)
+        INSERT INTO Board(id, boardName, password, title, content, inserted) VALUES (auto.nextval, #{boardName}, #{password}, #{title}, #{content}, sysdate)
     </insert>
 
     <update id="updateBoard">
@@ -26,5 +50,9 @@
     <delete id="deleteBoardById">
         DELETE FROM Board WHERE id = #{id}
     </delete>
+
+    <select id="total" resultType="int">
+        select count(*) from Board
+    </select>
 
 </mapper>

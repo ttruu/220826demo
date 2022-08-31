@@ -27,7 +27,19 @@
     <div class="row">
         <div class="col">
             <h1 style="margin-top: 30px;">글 작성</h1>
+
             <form action="/board/write" method="post">
+
+                <div>
+                    <label for="input2" class="from-label">이름</label>
+                    <input class="form-control" type="text" name="boardName" required id="input2" />
+                </div>
+
+                <div>
+                    <label for="input3" class="from-label">비밀번호</label>
+                    <input class="form-control" type="text" name="password" id="input3" />
+                </div>
+
                 <div>
                     <label for="input1" class="from-label">제목</label>
                     <input class="form-control" type="text" name="title" required id="input1" />

@@ -1,6 +1,6 @@
-<%@ tag language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ attribute name="current"%>
+<%@ tag language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ attribute name="current" %>
 
 <c:url value="/board/list" var="listUrl"></c:url>
 <c:url value="/board/write" var="writeUrl"></c:url>
@@ -33,11 +33,31 @@
 
             </ul>
 
-            <select id="dataPerPage">
-                <option value="10">10개씩 보기</option>
-                <option value="15">15개씩 보기</option>
-                <option value="20">20개씩 보기</option>
-            </select>
+            <%--    <select id="dataPerPage">
+                    <option value="10">10개씩 보기</option>
+                    <option value="15">15개씩 보기</option>
+                    <option value="20">20개씩 보기</option>
+                </select>--%>
+
+            <!-- 검색 기능 구현 -->
+
+            <form action="${listUrl }" class="float-start">
+                <div class="input-group">
+                    <select name="search" id="searchVerify" class="form-select"
+                            style="flex: 0 0 130px; text-align:center;">
+                        <option value="all"${param.type != 'title' && param.type != 'content' ? 'selected' : '' } >전체
+                        </option>
+                        <option value="title"${param.type == 'title' ? 'selected' : '' }>제목</option>
+                        <option value="content"${param.type == 'content' ? 'selected' : '' }>본문</option>
+                    </select>
+
+                    <input id="searchInput" class="form-control me-2" name="searchInput" type="search"
+                           placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="button">검색</button>
+                </div>
+            </form>
+
+
         </div>
     </div>
 </nav>
